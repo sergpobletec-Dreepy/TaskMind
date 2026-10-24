@@ -3,3 +3,6 @@ class Usuario:
         self._id = id_usuario
         self._nombre = nombre
         self._email = email
+
+    @property
+    def id(self): return self._id

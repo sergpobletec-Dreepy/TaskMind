@@ -6,3 +6,6 @@ class Usuario:
 
     @property
     def id(self): return self._id
+    
+    @property
+    def nombre(self): return self._nombre

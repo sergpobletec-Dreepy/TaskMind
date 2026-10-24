@@ -9,3 +9,6 @@ class Usuario:
     
     @property
     def nombre(self): return self._nombre
+    
+    @property
+    def email(self): return self.email

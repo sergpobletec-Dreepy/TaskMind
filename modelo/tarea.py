@@ -34,3 +34,20 @@ class Tarea(Cancelable): #clase tarea que
         if not self.es_cancelable():
             raise ValueError(f"No se puede cancelar '{self._titulo}'. Ya está COMPLETADA.")
         self._estado = EstadoTarea.CANCELADA
+
+    @abstractmethod
+    def to_dict(self):
+        pass
+
+    class AltaPrioridad(Tarea):
+        def __init__(self, id_tarea, titulo, descripcion, estado, usuario, horas_estimadas, fecha_limite):
+            super().__init__(id_tarea, titulo, descripcion, estado, usuario)
+            self.horas_estimadas = horas_estimadas
+            self.fecha_limite = fecha_limite
+
+    def to_dict(self):
+        return {
+            "tipo": "AltaPrioridad", "id": self.id, "titulo": self._titulo, "descripcion": self._descripcion,
+            "estado": self.estado.value, "usuario_id": self.usuario_asignado.id if self.usuario_asignado else None,
+            "horas_estimadas": self.horas_estimadas, "fecha_limite": self.fecha_limite
+        }

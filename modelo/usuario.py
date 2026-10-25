@@ -11,7 +11,11 @@ class Usuario:
     def nombre(self): return self._nombre
     
     @property
-    def email(self): return self.email
+    def email(self): return self._email
 
     def to_dict(self):
         return {"id": self._id, "nombre": self._nombre, "email": self._email}
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(data["id"], data["nombre"], data["email"])

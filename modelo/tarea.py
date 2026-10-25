@@ -11,4 +11,18 @@ class Tarea(Cancelable):
         self._estado = estado if isinstance(estado, EstadoTarea) else EstadoTarea(estado)
         self._usuario_asignado = usuario_asignado
 
+    @property
+    def id(self): return self._id
     
+    @property
+    def titulo(self): return self._titulo
+    
+    @property
+    def estado(self): return self._estado
+
+    @estado.setter
+    def estado(self, nuevo_estado):
+        self._estado = nuevo_estado
+
+    @property
+    def usuario_asignado(self): return self._usuario_asignado

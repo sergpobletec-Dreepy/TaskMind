@@ -3,15 +3,15 @@ from modelos.estado_tarea import EstadoTarea
 from modelos.cancelable import Cancelable
 
 
-class Tarea(Cancelable):
-    def __init__(self, id_tarea, titulo, descripcion, estado, usuario_asignado):
+class Tarea(Cancelable): #clase tarea que
+    def __init__(self, id_tarea, titulo, descripcion, estado, usuario_asignado): 
         self._id = id_tarea
         self._titulo = titulo
         self._descripcion = descripcion
         self._estado = estado if isinstance(estado, EstadoTarea) else EstadoTarea(estado)
         self._usuario_asignado = usuario_asignado
 
-    @property
+    @property #getters
     def id(self): return self._id
     
     @property
@@ -20,9 +20,17 @@ class Tarea(Cancelable):
     @property
     def estado(self): return self._estado
 
-    @estado.setter
+    @estado.setter #cambiar el estado de una tarea
     def estado(self, nuevo_estado):
         self._estado = nuevo_estado
 
     @property
     def usuario_asignado(self): return self._usuario_asignado
+
+    def es_cancelable(self):
+        return self._estado != EstadoTarea.COMPLETADA
+
+    def cancelar(self):
+        if not self.es_cancelable():
+            raise ValueError(f"No se puede cancelar '{self._titulo}'. Ya está COMPLETADA.")
+        self._estado = EstadoTarea.CANCELADA

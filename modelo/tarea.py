@@ -64,3 +64,16 @@ class Tarea(Cancelable): #clase tarea que
             "estado": self.estado.value, "usuario_id": self.usuario_asignado.id if self.usuario_asignado else None,
             "dias_vencimiento": self.dias_vencimiento, "frecuencia": self.frecuencia
         }
+
+    class BajaPrioridad(Tarea):
+        def __init__(self, id_tarea, titulo, descripcion, estado, usuario, es_postergable, condicion):
+            super().__init__(id_tarea, titulo, descripcion, estado, usuario)
+            self.es_postergable = es_postergable
+            self.condicion = condicion
+
+    def to_dict(self):
+        return {
+            "tipo": "BajaPrioridad", "id": self.id, "titulo": self._titulo, "descripcion": self._descripcion,
+            "estado": self.estado.value, "usuario_id": self.usuario_asignado.id if self.usuario_asignado else None,
+            "es_postergable": self.es_postergable, "condicion": self.condicion
+        }

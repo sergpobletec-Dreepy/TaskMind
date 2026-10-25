@@ -12,3 +12,6 @@ class Usuario:
     
     @property
     def email(self): return self.email
+
+    def to_dict(self):
+        return {"id": self._id, "nombre": self._nombre, "email": self._email}

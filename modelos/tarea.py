@@ -2,16 +2,15 @@ from abc import abstractmethod
 from modelos.estado_tarea import EstadoTarea
 from modelos.cancelable import Cancelable
 
-
-class Tarea(Cancelable): #clase tarea que
-    def __init__(self, id_tarea, titulo, descripcion, estado, usuario_asignado): 
+class Tarea(Cancelable):
+    def __init__(self, id_tarea, titulo, descripcion, estado, usuario_asignado):
         self._id = id_tarea
         self._titulo = titulo
         self._descripcion = descripcion
         self._estado = estado if isinstance(estado, EstadoTarea) else EstadoTarea(estado)
         self._usuario_asignado = usuario_asignado
 
-    @property #getters
+    @property
     def id(self): return self._id
     
     @property
@@ -20,7 +19,7 @@ class Tarea(Cancelable): #clase tarea que
     @property
     def estado(self): return self._estado
 
-    @estado.setter #cambiar el estado de una tarea
+    @estado.setter
     def estado(self, nuevo_estado):
         self._estado = nuevo_estado
 
@@ -39,11 +38,11 @@ class Tarea(Cancelable): #clase tarea que
     def to_dict(self):
         pass
 
-    class AltaPrioridad(Tarea):
-        def __init__(self, id_tarea, titulo, descripcion, estado, usuario, horas_estimadas, fecha_limite):
-            super().__init__(id_tarea, titulo, descripcion, estado, usuario)
-            self.horas_estimadas = horas_estimadas
-            self.fecha_limite = fecha_limite
+class AltaPrioridad(Tarea):
+    def __init__(self, id_tarea, titulo, descripcion, estado, usuario, horas_estimadas, fecha_limite):
+        super().__init__(id_tarea, titulo, descripcion, estado, usuario)
+        self.horas_estimadas = horas_estimadas
+        self.fecha_limite = fecha_limite
 
     def to_dict(self):
         return {
@@ -52,11 +51,11 @@ class Tarea(Cancelable): #clase tarea que
             "horas_estimadas": self.horas_estimadas, "fecha_limite": self.fecha_limite
         }
 
-    class MediaPrioridad(Tarea):
-        def __init__(self, id_tarea, titulo, descripcion, estado, usuario, dias_vencimiento, frecuencia):
-            super().__init__(id_tarea, titulo, descripcion, estado, usuario)
-            self.dias_vencimiento = dias_vencimiento
-            self.frecuencia = frecuencia
+class MediaPrioridad(Tarea):
+    def __init__(self, id_tarea, titulo, descripcion, estado, usuario, dias_vencimiento, frecuencia):
+        super().__init__(id_tarea, titulo, descripcion, estado, usuario)
+        self.dias_vencimiento = dias_vencimiento
+        self.frecuencia = frecuencia
 
     def to_dict(self):
         return {
@@ -65,11 +64,11 @@ class Tarea(Cancelable): #clase tarea que
             "dias_vencimiento": self.dias_vencimiento, "frecuencia": self.frecuencia
         }
 
-    class BajaPrioridad(Tarea):
-        def __init__(self, id_tarea, titulo, descripcion, estado, usuario, es_postergable, condicion):
-            super().__init__(id_tarea, titulo, descripcion, estado, usuario)
-            self.es_postergable = es_postergable
-            self.condicion = condicion
+class BajaPrioridad(Tarea):
+    def __init__(self, id_tarea, titulo, descripcion, estado, usuario, es_postergable, condicion):
+        super().__init__(id_tarea, titulo, descripcion, estado, usuario)
+        self.es_postergable = es_postergable
+        self.condicion = condicion
 
     def to_dict(self):
         return {

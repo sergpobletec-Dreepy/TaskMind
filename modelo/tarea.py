@@ -51,3 +51,16 @@ class Tarea(Cancelable): #clase tarea que
             "estado": self.estado.value, "usuario_id": self.usuario_asignado.id if self.usuario_asignado else None,
             "horas_estimadas": self.horas_estimadas, "fecha_limite": self.fecha_limite
         }
+
+    class MediaPrioridad(Tarea):
+        def __init__(self, id_tarea, titulo, descripcion, estado, usuario, dias_vencimiento, frecuencia):
+            super().__init__(id_tarea, titulo, descripcion, estado, usuario)
+            self.dias_vencimiento = dias_vencimiento
+            self.frecuencia = frecuencia
+
+    def to_dict(self):
+        return {
+            "tipo": "MediaPrioridad", "id": self.id, "titulo": self._titulo, "descripcion": self._descripcion,
+            "estado": self.estado.value, "usuario_id": self.usuario_asignado.id if self.usuario_asignado else None,
+            "dias_vencimiento": self.dias_vencimiento, "frecuencia": self.frecuencia
+        }

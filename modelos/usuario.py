@@ -19,3 +19,5 @@ class Usuario:
     @classmethod
     def from_dict(cls, data):
         return cls(data["id"], data["nombre"], data["email"])
+
+    

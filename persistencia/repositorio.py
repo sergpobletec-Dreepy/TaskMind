@@ -1,37 +1,52 @@
 import json
-import os
-from modelos import Usuario, Tarea, AltaPrioridad, MediaPrioridad, BajaPrioridad, EstadoTarea
+from pathlib import Path
+
+from modelos import TareaFactory, Usuario
+
 
 class RepositorioJSON:
-    FILE_USUARIOS = "usuarios.json"
-    FILE_TAREAS = "tareas.json"
+    def __init__(self, directorio_base=None):
+        raiz = Path(directorio_base) if directorio_base else Path(__file__).resolve().parent.parent
+        self.archivo_usuarios = raiz / "usuarios.json"
+        self.archivo_tareas = raiz / "tareas.json"
 
-    @classmethod
-    def guardar_datos(cls, usuarios, tareas):
-        with open(cls.FILE_USUARIOS, "w") as f:
-            json.dump([u.to_dict() for u in usuarios], f, indent=4)
-        
-        with open(cls.FILE_TAREAS, "w") as f:
-            json.dump([t.to_dict() for t in tareas], f, indent=4)
+    def guardar_datos(self, usuarios, tareas):
+        self._escribir(self.archivo_usuarios, [u.to_dict() for u in usuarios])
+        self._escribir(self.archivo_tareas, [t.to_dict() for t in tareas])
 
-    @classmethod
-    def cargar_datos(cls):
+    def cargar_datos(self):
         usuarios = []
-        tareas = []
-        if os.path.exists(cls.FILE_USUARIOS):
-            with open(cls.FILE_USUARIOS, "r") as f:
-                usuarios = [Usuario.from_dict(d) for d in json.load(f)]
-                
-        dic_usuarios = {u.id: u for u in usuarios}
+        for data in self._leer(self.archivo_usuarios):
+            usuarios.append(Usuario.from_dict(data))
 
-        if os.path.exists(cls.FILE_TAREAS):
-            with open(cls.FILE_TAREAS, "r") as f:
-                for d in json.load(f):
-                    u = dic_usuarios.get(d["usuario_id"])
-                    if d["tipo"] == "AltaPrioridad":
-                        tareas.append(AltaPrioridad(d["id"], d["titulo"], d["descripcion"], d["estado"], u, d["horas_estimadas"], d["fecha_limite"]))
-                    elif d["tipo"] == "MediaPrioridad":
-                        tareas.append(MediaPrioridad(d["id"], d["titulo"], d["descripcion"], d["estado"], u, d["dias_vencimiento"], d["frecuencia"]))
-                    elif d["tipo"] == "BajaPrioridad":
-                        tareas.append(BajaPrioridad(d["id"], d["titulo"], d["descripcion"], d["estado"], u, d["es_postergable"], d["condicion"]))
+        por_id = {u.id: u for u in usuarios}
+        tareas = []
+        for data in self._leer(self.archivo_tareas):
+            usuario = por_id.get(data.get("usuario_id"))
+            if usuario is None:
+                raise ValueError(
+                    f"La tarea {data.get('id')} referencia un usuario inexistente ({data.get('usuario_id')})."
+                )
+            tareas.append(TareaFactory.desde_dict(data, usuario))
         return usuarios, tareas
+
+    def _leer(self, ruta):
+        if not ruta.exists():
+            return []
+        try:
+            with open(ruta, "r", encoding="utf-8") as archivo:
+                contenido = archivo.read().strip()
+                if not contenido:
+                    return []
+                datos = json.loads(contenido)
+        except json.JSONDecodeError as error:
+            raise ValueError(f"No se pudo leer {ruta.name}: JSON inválido ({error.msg}).") from error
+        if not isinstance(datos, list):
+            raise ValueError(f"{ruta.name} debe contener una lista.")
+        return datos
+
+    def _escribir(self, ruta, datos):
+        temporal = ruta.with_suffix(ruta.suffix + ".tmp")
+        with open(temporal, "w", encoding="utf-8") as archivo:
+            json.dump(datos, archivo, indent=4, ensure_ascii=False)
+        temporal.replace(ruta)

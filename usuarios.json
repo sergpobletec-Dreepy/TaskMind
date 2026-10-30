@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "nombre": "Carlos Gomez",
+        "email": "carlos@email.com"
+    },
+    {
+        "id": 2,
+        "nombre": "Sergio Poblete",
+        "email": "serg.pobletec@duocuc.cl"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "titulo": "Proyecto de POO",
+        "descripcion": "Entregar código",
+        "estado": "PENDIENTE",
+        "usuario_id": 1,
+        "tipo": "AltaPrioridad",
+        "horas_estimadas": 10,
+        "fecha_limite": "2026-10-15"
+    },
+    {
+        "id": 2,
+        "titulo": "Gimnacio",
+        "descripcion": "sentadillas",
+        "estado": "COMPLETADA",
+        "usuario_id": 2,
+        "tipo": "AltaPrioridad",
+        "horas_estimadas": 1,
+        "fecha_limite": "2026-11-01"
+    },
+    {
+        "id": 3,
+        "titulo": "Estudiar",
+        "descripcion": "prueba de matematicas",
+        "estado": "CANCELADA",
+        "usuario_id": 2,
+        "tipo": "MediaPrioridad",
+        "dias_vencimiento": 15,
+        "frecuencia": "10"
+    }
+]

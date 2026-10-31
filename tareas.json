@@ -28,5 +28,15 @@
         "tipo": "MediaPrioridad",
         "dias_vencimiento": 15,
         "frecuencia": "10"
+    },
+    {
+        "id": 4,
+        "titulo": "ducharme",
+        "descripcion": "me hace falta",
+        "estado": "COMPLETADA",
+        "usuario_id": 2,
+        "tipo": "AltaPrioridad",
+        "horas_estimadas": 1,
+        "fecha_limite": "2026-12-12"
     }
 ]

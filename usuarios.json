@@ -8,5 +8,10 @@
         "id": 2,
         "nombre": "Sergio Poblete",
         "email": "serg.pobletec@duocuc.cl"
+    },
+    {
+        "id": 3,
+        "nombre": "Carla",
+        "email": "carla@duocuc.cl"
     }
 ]

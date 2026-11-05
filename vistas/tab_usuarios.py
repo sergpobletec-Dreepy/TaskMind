@@ -16,14 +16,14 @@ class TabUsuarios(ttk.Frame):
         formulario = ttk.LabelFrame(self, text="Usuario", padding=12)
         formulario.pack(fill="x", padx=12, pady=(12, 8))
         formulario.columnconfigure(1, weight=1)
-        formulario.columnconfigure(3, weight=1)
+        formulario.columnconfigure(3, weight=1) #construccion de lienas para lleanar con datos de usuarios
 
         ttk.Label(formulario, text="ID").grid(row=0, column=0, sticky="e", padx=(0, 8), pady=4)
         self.lbl_id = ttk.Label(formulario, text="Automático")
         self.lbl_id.grid(row=0, column=1, sticky="w", pady=4)
 
         ttk.Label(formulario, text="Nombre").grid(row=1, column=0, sticky="e", padx=(0, 8), pady=4)
-        self.ent_nombre = ttk.Entry(formulario)
+        self.ent_nombre = ttk.Entry(formulario) #es la caja blanca de texto para ingresar el nombre del usuario
         self.ent_nombre.grid(row=1, column=1, sticky="ew", pady=4)
 
         ttk.Label(formulario, text="Email").grid(row=1, column=2, sticky="e", padx=(16, 8), pady=4)
@@ -37,7 +37,7 @@ class TabUsuarios(ttk.Frame):
         ).grid(row=2, column=0, columnspan=4, sticky="w", pady=(4, 0))
 
         acciones = ttk.Frame(formulario)
-        acciones.grid(row=3, column=0, columnspan=4, sticky="w", pady=(10, 0))
+        acciones.grid(row=3, column=0, columnspan=4, sticky="w", pady=(10, 0)) #configuracion de los botones para las diferentes acciones de los usuarios
         ttk.Button(acciones, text="Nuevo", command=self.limpiar_formulario).pack(side="left", padx=(0, 6))
         ttk.Button(acciones, text="Guardar", command=self.guardar).pack(side="left", padx=6)
         ttk.Button(acciones, text="Eliminar", command=self.eliminar).pack(side="left", padx=6)

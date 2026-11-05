@@ -12,7 +12,7 @@ class TabUsuarios(ttk.Frame):
         self._construir()
         self.refrescar()
 
-    def _construir(self):
+    def _construir(self): #hace que se cosntruya el formulario de usuarios y la tabla de usuarios 
         formulario = ttk.LabelFrame(self, text="Usuario", padding=12)
         formulario.pack(fill="x", padx=12, pady=(12, 8))
         formulario.columnconfigure(1, weight=1)

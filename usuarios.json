@@ -13,5 +13,10 @@
         "id": 3,
         "nombre": "Carla Cataldo",
         "email": "carla@duocuc.cl"
+    },
+    {
+        "id": 4,
+        "nombre": "Alejandra Santa Cruz",
+        "email": "alejasantacruz@gmail.com"
     }
 ]

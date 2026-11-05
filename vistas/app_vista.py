@@ -32,8 +32,8 @@ class AppVista(tk.Tk):
         estilo = ttk.Style(self)
         if "clam" in estilo.theme_names():
             estilo.theme_use("clam")
-        estilo.configure("TNotebook.Tab", padding=(5, 8))
-        estilo.configure("Treeview", rowheight=26, font=("Segoe UI", 10))
-        estilo.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
-        estilo.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))
+        estilo.configure("TNotebook.Tab", padding=(16, 8)) #tamano pestanas 
+        estilo.configure("Treeview", rowheight=40, font=("Segoe UI", 10)) # tamano celdas tareas y usuarios 
+        estilo.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))# tamano y tipo letras titulos cuadros
+        estilo.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))#tamano y tipo letras debajo del titutlo
         estilo.configure("TButton", padding=(10, 4))

@@ -12,18 +12,18 @@ class TabUsuarios(ttk.Frame):
         self._construir()
         self.refrescar()
 
-    def _construir(self):
+    def _construir(self): #hace que se cosntruya el formulario de usuarios y la tabla de usuarios 
         formulario = ttk.LabelFrame(self, text="Usuario", padding=12)
         formulario.pack(fill="x", padx=12, pady=(12, 8))
         formulario.columnconfigure(1, weight=1)
-        formulario.columnconfigure(3, weight=1)
+        formulario.columnconfigure(3, weight=1) #construccion de lienas para lleanar con datos de usuarios
 
         ttk.Label(formulario, text="ID").grid(row=0, column=0, sticky="e", padx=(0, 8), pady=4)
         self.lbl_id = ttk.Label(formulario, text="Automático")
         self.lbl_id.grid(row=0, column=1, sticky="w", pady=4)
 
         ttk.Label(formulario, text="Nombre").grid(row=1, column=0, sticky="e", padx=(0, 8), pady=4)
-        self.ent_nombre = ttk.Entry(formulario)
+        self.ent_nombre = ttk.Entry(formulario) #es la caja blanca de texto para ingresar el nombre del usuario
         self.ent_nombre.grid(row=1, column=1, sticky="ew", pady=4)
 
         ttk.Label(formulario, text="Email").grid(row=1, column=2, sticky="e", padx=(16, 8), pady=4)
@@ -37,26 +37,26 @@ class TabUsuarios(ttk.Frame):
         ).grid(row=2, column=0, columnspan=4, sticky="w", pady=(4, 0))
 
         acciones = ttk.Frame(formulario)
-        acciones.grid(row=3, column=0, columnspan=4, sticky="w", pady=(10, 0))
+        acciones.grid(row=3, column=0, columnspan=4, sticky="w", pady=(10, 0)) #configuracion de los botones para las diferentes acciones de los usuarios
         ttk.Button(acciones, text="Nuevo", command=self.limpiar_formulario).pack(side="left", padx=(0, 6))
         ttk.Button(acciones, text="Guardar", command=self.guardar).pack(side="left", padx=6)
         ttk.Button(acciones, text="Eliminar", command=self.eliminar).pack(side="left", padx=6)
 
-        tabla, self.tree = arbol_con_scroll(
+        tabla, self.tree = arbol_con_scroll( #coloca la tabla de usuarios en la parte inferior del formulario
             self,
             ("ID", "Nombre", "Email", "Tareas"),
             {"ID": 60, "Nombre": 220, "Email": 280, "Tareas": 80},
         )
-        tabla.pack(fill="both", expand=True, padx=12, pady=(0, 12))
-        self.tree.bind("<<TreeviewSelect>>", self._cargar_seleccion)
+        tabla.pack(fill="both", expand=True, padx=12, pady=(0, 12)) 
+        self.tree.bind("<<TreeviewSelect>>", self._cargar_seleccion)#hace que al seleccionar un usuario en la tabla, se carguen sus datos en el formulario para poder editarlos
 
-    def refrescar(self):
+    def refrescar(self): #hace que la tabla de usuarios se actualice con los datos actuales de los usuarios
         limpiar_arbol(self.tree)
         for usuario in self.gestor.usuarios:
             cantidad = self.gestor.cantidad_tareas(usuario.id)
-            self.tree.insert("", "end", iid=str(usuario.id), values=(usuario.id, usuario.nombre, usuario.email, cantidad))
+            self.tree.insert("", "end", iid=str(usuario.id), values=(usuario.id, usuario.nombre, usuario.email, cantidad))#hace que
 
-    def limpiar_formulario(self):
+    def limpiar_formulario(self):#hace que el formulario de usuarios se limpie para poder ingresar un nuevo usuario
         self._id_edicion = None
         self.lbl_id.config(text="Automático")
         self.ent_nombre.delete(0, "end")
@@ -64,7 +64,7 @@ class TabUsuarios(ttk.Frame):
         self.tree.selection_remove(self.tree.selection())
         self.ent_nombre.focus_set()
 
-    def guardar(self):
+    def guardar(self):#hace que se guarden los datos del usuario en el formulario, ya se para crear uno o actualizar uno existente
         try:
             nombre = self.ent_nombre.get()
             email = self.ent_email.get()
@@ -81,7 +81,7 @@ class TabUsuarios(ttk.Frame):
         except ValueError as error:
             messagebox.showerror("Validación", str(error), parent=self)
 
-    def eliminar(self):
+    def eliminar(self):#hace que se elimine un usuario seleccionado en al tabla 
         if self._id_edicion is None:
             messagebox.showwarning("Usuarios", "Seleccione un usuario en la tabla.", parent=self)
             return
@@ -101,7 +101,7 @@ class TabUsuarios(ttk.Frame):
         except ValueError as error:
             messagebox.showerror("No se pudo eliminar", str(error), parent=self)
 
-    def _cargar_seleccion(self, _event=None):
+    def _cargar_seleccion(self, _event=None):#hace que al seleccionar un usuario en la tabla, se carguen los datos del usuario para poder editarlos
         seleccion = self.tree.selection()
         if not seleccion:
             return

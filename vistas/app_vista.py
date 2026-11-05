@@ -5,7 +5,7 @@ from vistas.tab_tareas import TabTareas
 from vistas.tab_usuarios import TabUsuarios
 
 
-class AppVista(tk.Tk):
+class AppVista(tk.Tk): #hace que se construya la ventana principal de la aplicacion, con las pestanas de tareas y usuarios
     def __init__(self, gestor_usuarios, gestor_tareas):
         super().__init__()
         self.gestor_usuarios = gestor_usuarios
@@ -24,16 +24,16 @@ class AppVista(tk.Tk):
         self.notebook.add(self.tab_tareas, text="Tareas")
         self.notebook.add(self.tab_usuarios, text="Usuarios")
 
-    def _al_cambiar_usuarios(self):
+    def _al_cambiar_usuarios(self): #hace que al cambiar los datos de un usuario, se actualicen los datos de la tabla de usuarios 
         self.tab_tareas.refrescar_usuarios()
         self.tab_tareas.refrescar()
 
-    def _aplicar_estilo(self):
+    def _aplicar_estilo(self): #hace que se aplique un estilo a la ventana principal de la aplicacion
         estilo = ttk.Style(self)
         if "clam" in estilo.theme_names():
             estilo.theme_use("clam")
-        estilo.configure("TNotebook.Tab", padding=(16, 8))
-        estilo.configure("Treeview", rowheight=26, font=("Segoe UI", 10))
-        estilo.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
-        estilo.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))
+        estilo.configure("TNotebook.Tab", padding=(16, 8)) #tamano pestanas 
+        estilo.configure("Treeview", rowheight=40, font=("Segoe UI", 10)) # tamano celdas tareas y usuarios 
+        estilo.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))# tamano y tipo letras titulos cuadros
+        estilo.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))#tamano y tipo letras debajo del titutlo
         estilo.configure("TButton", padding=(10, 4))

@@ -32,7 +32,7 @@ class AppVista(tk.Tk):
         estilo = ttk.Style(self)
         if "clam" in estilo.theme_names():
             estilo.theme_use("clam")
-        estilo.configure("TNotebook.Tab", padding=(16, 8))
+        estilo.configure("TNotebook.Tab", padding=(5, 8))
         estilo.configure("Treeview", rowheight=26, font=("Segoe UI", 10))
         estilo.configure("Treeview.Heading", font=("Segoe UI", 10, "bold"))
         estilo.configure("TLabelframe.Label", font=("Segoe UI", 10, "bold"))
